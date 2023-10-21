@@ -1,0 +1,723 @@
+<html lang="en">
+
+<head>
+    <title>Прокси</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"> -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" /> -->
+    <!-- Favicon icon -->
+    <link rel="icon" href="/static/panel/img/favicon.png" type="image/x-icon">
+
+    <!-- prism css -->
+    <!-- <link rel="stylesheet" href="assets/css/plugins/prism-coy.css"> -->
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/static/panel/assets/css/plugins/select2.min.css">
+    <link rel="stylesheet" href="/static/panel/assets/css/plugins/daterangepicker.css">
+    <link rel="stylesheet" href="/static/panel/assets/css/style.css?1697545152">
+    
+    <link rel="stylesheet" href="/static/panel/css/extra-style.css?1697545152">
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '134796573014683');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=134796573014683&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <script src="/static/panel/assets/js/vendor-all.min.js"></script>
+    <script src="/static/panel/assets/js/plugins/select2.full.min.js"></script>
+    <script src="/static/panel/assets/js/plugins/moment.min.js"></script>
+    <script src="/static/panel/assets/js/plugins/daterangepicker.js"></script>
+
+    <script>
+        window.BALANCE = 0.01;
+        window.CSRF_TOKEN = "v5Q6M8qPjcEDHLNjI0aX9uy8yRWUnyCtDshVclCk8JtYwzjkIEr4bfkIRhd2dERZ";
+        window.TRANS = {
+            copied: "Скопировано",
+            countryNotAvailable: "Эта страна недоступна",
+            open: "Открыть",
+            newMessageFromAdmin: "Вы получили новое сообщение от администрации",
+            saved: "Сохранено",
+            selectProxies: "Нужно выбрать прокси"
+        }
+        window.NEW_TICKET_MESSAGES = 0;
+		window.VARS = {"CONST": {"IPTYPE": {"DEDICATED": 1, "SHARED": 2}}, "URLS": {"tickets": "/tickets/", "saveProxySpecs": "/save-proxy-specs/", "checkProxy": "/check-proxy/"}};
+    </script>
+
+</head>
+
+<body>
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+
+    <!-- [ Header ] start -->
+    
+<header class="navbar pcoded-header navbar-expand-lg navbar-light header-purple">
+  <div class="container-fluid">
+    <div class="m-header">
+      <a href="/" class="b-brand">
+        <img src="/static/panel/img/logo/logo_ru.svg" alt="" class="logo">
+      </a>
+      <a href="/balance/" class="header-balance ml-3 mr-3" title="Баланс">
+          <button class="btn btn-sm btn-danger">
+            <i class="fas fa-coins"></i> 
+            0.01$ 
+            
+            <div class="header-balance-usd">(0&#8381;)</div>
+          </button>
+      </a>
+
+      <a href="#!" class="mob-toggler">
+          <i class="feather icon-more-vertical"></i>
+      </a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-1 mr-auto">
+        <li class="nav-item">
+          <a href="/order/"><i class="fas fa-cart-arrow-down mr-1"></i> Новый заказ</a>
+        </li>
+        <li class="nav-item">
+          <div class="dropdown">
+            <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
+                <i class="feather icon-align-justify mr-1"></i>
+                <span class="d-none d-sm-inline-block">Прокси</span>
+            </a>
+            <div class="dropdown-menu profile-notification ">
+              <ul class="pro-body">
+                <li><a href="/all/" class="dropdown-item"><i class="fas fa-circle"></i> Все прокси</a></li>
+                <li><a href="/all/?status=active" class="dropdown-item"><i class="fas fa-circle"></i> Активные прокси</a></li>
+                <li><a href="/all/?status=expired_no_deleted" class="dropdown-item"><i class="fas fa-circle"></i> Истекшие прокси</a></li>
+                <li><a href="/all/?status=deleted" class="dropdown-item"><i class="fas fa-circle"></i> Удаленные прокси</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a href="/access-ips/" class="dropdown-item"><i class="fas fa-circle"></i> Разрешенные IP</a></li>
+                <li><a href="/tags/" class="dropdown-item"><i class="fas fa-circle"></i> Теги</a></li>
+                <li><a href="/proxy-formats/" class="dropdown-item"><i class="fas fa-circle"></i> Персональные форматы</a></li>
+                <li><a href="/orders/" class="dropdown-item"><i class="fas fa-circle"></i> Заказы</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="dropdown">
+            <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
+                <i class="feather icon-layers mr-1"></i>
+                <span class="d-none d-sm-inline-block">Больше</span>
+            </a>
+            <div class="dropdown-menu profile-notification ">
+              <ul class="pro-body">
+                <li><a href="/bulk-order/" class="dropdown-item"><i class="fas fa-circle"></i> Массовый заказ</a></li>
+                <li><a href="/dev/" class="dropdown-item"><i class="fas fa-circle"></i> API</a></li>
+                <li title="Инструкция по настройке">
+                  <a target="_blank" class="dropdown-item" href="https://proxyline.net/blog"><i class="fas fa-circle"></i> Блог</a>
+                </li>
+                <li><a class="dropdown-item" href="/referral-program/"><i class="fas fa-circle"></i> Партнерская программа</a></li>
+                <li><a class="dropdown-item" href="/tickets/"><i class="fas fa-circle"></i> Поддержка</a></li>
+                <li><a class="dropdown-item" href="/balance-history/"><i class="fas fa-circle"></i> История баланса</a></li>
+                <li><a class="dropdown-item" href="/payments/"><i class="fas fa-circle"></i> Платежи</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li>
+          <div class="dropdown drp-user">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fas fa-user"></i> <span class="d-none d-md-inline-block">zimiki@mail.ru</span>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right profile-notification">
+              <ul class="pro-body">
+                <h6 class="dropdown-header">zimiki@mail.ru</h6>
+                <li><a href="/settings/" class="dropdown-item"><i class="feather icon-user"></i> Настройки аккаунта</a></li>
+                <!-- <li><a href="/integrations/" class="dropdown-item"><i class="feather icon-globe"></i> Интеграции</a></li> -->
+                <li><a href="/change-password/" class="dropdown-item"><i class="feather icon-mail"></i> Сменить пароль</a></li>
+                <li><a href="/logout/" class="dropdown-item"><i class="feather icon-lock"></i> Выйти</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="header-balance" title="Баланс">
+          <a href="/balance/">
+            <button class="btn btn-sm btn-danger">
+              <i class="fas fa-coins"></i> 
+              0.01$
+              <div class="header-balance-usd">(0&#8381;)</div>
+            </button> 
+          </a>
+        </li>
+
+        <li class="header-lang header-switch ml-3" data-switch="lang" data-url="/update-language/">
+          
+          <a href="#" data-value="en">
+            <img src="/static/panel/img/langs/en.png" title="Switch to English" data-toggle="tooltip-primary">
+          </a>
+          
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <!-- [ Header ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper container-fluid p-t-50">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content p-t-20">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <div class="page-content">
+                                <div class="page-header mb-3">
+                                    <div class="page-block">
+
+                                        
+
+                                        
+  <div class="text-center mb-5">
+  
+    <div class="mb-2 banner">
+      
+      <a href="https://farmproxy.net/?utm_source=proxyline&amp;utm_medium=banner&amp;utm_campaign=sale" target="_blank">
+          <img src="https://static.proxyline.net/media/img/farm.gif" title="Farm">
+      </a>
+      
+    </div>
+  
+  </div>
+
+
+
+                                        
+
+                                        <div class="mb-2 ">
+                                            <h1 class="font-weight-normal mb-0">Прокси</h1> 
+                                            
+                                        </div>
+
+                                        
+                                    
+                                    </div>
+                                    <div class="alerts mt-2">
+                                        
+
+
+                                        
+                                    </div>
+                                </div>
+
+                                <!-- [ Main Content ] start -->
+                                
+
+  <form action="" class="proxy-filters js-proxy-filter-form" data-filters='[]'>
+    <div class="card shadow-lg " data-card-collapse="filter">
+
+      <div class="card-header">
+        <h3 class="card-title"><i class="fa fa-filter"></i> Фильтр</h3>
+        <div class="card-header-right mt-1">
+          <button type="button" class="btn card-options-collapse">
+            <i class="feather icon-chevron-up f-16"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_ip_version">Версия IP:</label>
+                  <select name="ip_version" style="width:100%" class="form-control" id="id_ip_version">
+  <option value="" selected>-----------------</option>
+
+  <option value="4">IPv4</option>
+
+  <option value="6">IPv6</option>
+
+</select>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_ip_type">Тип:</label>
+                  <select name="ip_type" style="width:100%" class="form-control" id="id_ip_type">
+  <option value="" selected>-----------------</option>
+
+  <option value="1">Индивидуальные</option>
+
+  <option value="2">Общие</option>
+
+</select>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_status">Статус:</label>
+                  <select name="status" style="width:100%" class="form-control" id="id_status">
+  <option value="" selected>-----------------</option>
+
+  <option value="active">Активные</option>
+
+  <option value="expired">Истекшие и удаленные</option>
+
+  <option value="expired_no_deleted">Истекшие без удаленных</option>
+
+  <option value="deleted">Удаленные</option>
+
+  <option value="exclude_deleted">Исключить удаленные</option>
+
+</select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_date_start">Дата создания:</label>
+                  <input type="text" name="date_start" autocomplete="off" class="form-control js-datetime-range-picker" id="id_date_start">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_date_end">Дата окончания:</label>
+                  <input type="text" name="date_end" autocomplete="off" class="form-control js-datetime-range-picker" id="id_date_end">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_ip">IP:</label>
+                  <input type="text" name="ip" class="form-control" id="id_ip">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_id">ID прокси:</label>
+                  <input type="text" name="id" class="form-control" id="id_id">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_port">Порт:</label>
+                  <input type="number" name="port" max="65535" min="1000" class="form-control" id="id_port">
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_auto_renewal">Автопродление:</label>
+                  <select name="auto_renewal" style="width:100%" class="form-control" id="id_auto_renewal">
+  <option value="" selected>-----------------</option>
+
+  <option value="true">Да</option>
+
+  <option value="false">Нет</option>
+
+</select>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="id_nonrenewable">Нельзя продлить:</label>
+                  <select name="nonrenewable" style="width:100%" class="form-control" id="id_nonrenewable">
+  <option value="" selected>-----------------</option>
+
+  <option value="true">Нельзя продлить</option>
+
+  <option value="false">Можно продлить</option>
+
+</select>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-sm-4 select-filters">
+            <div class="form-group">
+              <span>Заказы</span>
+              <select name="orders" data-ajax--url="/json/order/" class="select2-ajax form-control" style="width:100%" id="id_orders" multiple>
+</select>
+            </div>
+
+            <div class="form-group">
+              <div class="d-flex">
+                <span class="mt-1">Страны</span>
+        
+                <label class="custom-control custom-checkbox d-flex m-0 ml-auto">
+                  <input type="checkbox" class="custom-control-input" name="countries_exclude" >
+                  <span class="custom-control-label">Исключить</span>
+                </label>
+              </div>
+              <select name="countries" data-ajax--url="/json/servercountry/" class="select2-ajax form-control" style="width:100%" id="id_countries" multiple>
+</select>
+            </div>
+            
+            <div class="form-group">
+              <div class="d-flex">
+                <span class="mt-1">Теги</span>
+        
+                <label class="custom-control custom-checkbox d-flex m-0 ml-auto">
+                  <input type="checkbox" class="custom-control-input" name="tags_exclude" >
+                  <span class="custom-control-label">Исключить</span>
+                </label>
+              </div>
+
+              <select name="tags" data-ajax--url="/json/tag/" class="select2-ajax form-control" style="width:100%" id="id_tags" multiple>
+</select>
+            </div>
+        
+            <div class="form-group">
+              <div class="d-flex">
+                <span class="mt-1">Разрешенные IP</span>
+        
+                <label class="custom-control custom-checkbox d-flex m-0 ml-auto">
+                  <input type="checkbox" class="custom-control-input" name="access_ips_exclude" >
+                  <span class="custom-control-label">Исключить</span>
+                </label>
+              </div>
+              <select name="access_ips" data-ajax--url="/json/accessip/" class="select2-ajax form-control" style="width:100%" id="id_access_ips" multiple>
+</select>
+            </div>
+          </div>
+        </div>
+
+        
+
+      </div>
+      <div class="card-footer text-center">
+        <a href="/all/" class="btn btn-sm btn-secondary btn mr-2">Сбросить</a>
+        <button type="submit" class="btn btn-sm btn-primary btn">Найти</button>
+      </div>
+    </div>
+  </form>
+
+  
+    
+
+<div class="card shadow-lg js-update-comment " data-card-collapse="notes">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fa fa-sticky-note"></i> Заметки</h3>
+    <div class="card-header-right mt-1">
+      <button type="button" class="btn card-options-collapse">
+        <i class="feather icon-chevron-up f-16"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <textarea class="form-control" placeholder="..." readonly></textarea>
+  </div>
+  <div class="card-footer">
+    <button type="button" class="btn btn-sm btn-secondary float-right"><i class="fas fa-pen"></i> Изменить</button>
+    <button style="display: none" data-url="/update-comment/" type="button" class="btn btn-sm btn-primary float-right"><span class="spinner-border spinner-border-sm" style="display: none"></span> Сохранить</button>
+  </div>
+</div>
+
+  
+
+
+  <div class="card shadow-lg pt-2" id="proxies">
+    <div class="px-4 mb-4">
+      <div class="list-actions-form-errors"></div>
+      <form method="POST" action="" id="list-actions-form" data-object-param="_o" data-all-param="__all__" data-count="">
+        <input type="hidden" name="csrfmiddlewaretoken" value="v5Q6M8qPjcEDHLNjI0aX9uy8yRWUnyCtDshVclCk8JtYwzjkIEr4bfkIRhd2dERZ">
+
+        <div class="row">
+          <div class="col-sm-6 mt-4">
+            <h3 class="mb-4 font-weight-bold"><i class="fa fa-caret-square-right"></i> Действия</h3>
+
+            <div class="input-group" style="max-width: 350px">
+              <select name="action" id="js-actions-select" class="form-control" data-extra=''>
+                
+                  <option value="renew">Продлить</option>
+                
+                  <option value="manage">Управлять тегами, разр. IP и автопродлением</option>
+                
+              </select>
+              <div class="input-group-append">
+                <button type="button" class="btn btn-primary js-actions-run" name="runaction" value="1">Выполнить</button>
+              </div>
+            </div>
+            <div class="custom-control custom-checkbox mt-1 ml-1">
+              <input type="checkbox" name="__all__" class="custom-control-input input-primary" id="select-all">
+               <label class="custom-control-label" for="select-all"> Выбрать все (16)</label>
+            </div>
+
+          </div>
+
+          <div class="col-sm-6 mt-4">
+            <h3 class="mb-4 font-weight-bold"><i class="fa fa-download"></i> Получить прокси</h3>
+            <div class="btn-group">
+              <button class="btn btn-success" name="getproxy" value="default_http">HTTP</button>
+              <button class="btn btn-danger" name="getproxy" value="default_socks5">SOCKS5</button>
+              <button class="btn btn-warning" name="getproxy" value="csv">CSV</button>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    
+                </button>
+                <div class="dropdown-menu dropdown-menu-buttons">
+                  <h6 class="dropdown-header">HTTP</h6>
+                  <button class="dropdown-item" name="getproxy" value="default_http">ip:port:username:password</button>
+                  <button class="dropdown-item" name="getproxy" value="host_http">username:password@ip:port</button>
+
+                  <h6 class="dropdown-header">SOCKS5</h6>
+                  <button class="dropdown-item" name="getproxy" value="default_socks5">ip:port:username:password</button>
+                  <button class="dropdown-item" name="getproxy" value="host_socks5">username:password@ip:port</button>
+
+                  <div class="dropdown-divider"></div>
+                  <button class="dropdown-item" name="getproxy" value="csv">CSV</button>
+
+                  <div class="dropdown-divider"></div>
+                  <h6 class="dropdown-header">Персональные форматы</h6>
+                  
+                  <button class="dropdown-item" name="getproxy" value="custom_socks5">Default socks5</button>
+                  
+                  <button class="dropdown-item" name="getproxy" value="custom_http">Default http</button>
+                  
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item f-12 text-danger" target="_blank" href="/proxy-formats/">Изменить персональные форматы</a>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="custom-control custom-switch mt-1 ml-1">
+              <input type="checkbox" name="newtab" class="custom-control-input" id="newtab-switch">
+              <label class="custom-control-label" for="newtab-switch">В новой вкладке браузера</label>
+            </div>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+
+    
+
+
+<div class="text-right mt-2 mb-1 ml-auto mr-3">
+  
+  <div class="dropdown d-inline-block mr-3" data-cookie="proxyorder">
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle text-dark">
+      <i class="fa fa-sort mr-1"></i>
+      Порядок
+    </a>
+    <div class="dropdown-menu dropdown-menu-right">
+      
+        <a href="#" class="dropdown-item " data-value="date_start">
+          <i class="far fa-sm fa-circle mr-2 text-muted"></i>
+          Дата создания
+        </a>
+      
+        <a href="#" class="dropdown-item " data-value="-date_start">
+          <i class="far fa-sm fa-circle mr-2 text-muted"></i>
+          Дата создания (по убыванию)
+        </a>
+      
+        <a href="#" class="dropdown-item bg-light" data-value="date_end">
+          <i class="far fa-sm fa-check-circle mr-2 text-muted"></i>
+          Дата окончания
+        </a>
+      
+        <a href="#" class="dropdown-item " data-value="-date_end">
+          <i class="far fa-sm fa-circle mr-2 text-muted"></i>
+          Дата окончания (по убыванию)
+        </a>
+      
+    </div>
+  </div>
+
+  <div class="dropdown d-inline-block mr-3" data-cookie="proxylimit">
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle text-dark">
+      <i class="fa fa-list-ol mr-1"></i>
+      На странице
+    </a>
+    <div class="dropdown-menu dropdown-menu-right">
+      
+        <a href="#" class="dropdown-item " data-value="50">
+          <i class="far fa-sm fa-circle mr-2 text-muted"></i>
+          50
+        </a>
+      
+        <a href="#" class="dropdown-item " data-value="100">
+          <i class="far fa-sm fa-circle mr-2 text-muted"></i>
+          100
+        </a>
+      
+        <a href="#" class="dropdown-item " data-value="200">
+          <i class="far fa-sm fa-circle mr-2 text-muted"></i>
+          200
+        </a>
+      
+    </div>
+  </div>
+  
+
+  <label class="custom-control custom-checkbox d-inline-block mr-3">
+    <input type="checkbox" class="custom-control-input" name="switch_display" data-field="tags" >
+    <span class="custom-control-label">Скрыть теги</span>
+  </label>
+
+  <label class="custom-control custom-checkbox d-inline-block">
+    <input type="checkbox" class="custom-control-input" name="switch_display" data-field="access_ips" >
+    <span class="custom-control-label">Скрыть разрешенные IP</span>
+  </label>
+</div>
+
+<div class="table-responsive pb-6">
+  <table class="table table-xs table-vcenter table-striped card-table text-nowrap mb-0 proxy-table default-table" data-specs-url="/proxy-specs/" data-checkboxes>
+    <thead>
+      <tr>
+        
+        <th style="width: 20px;"><input type="checkbox" id="js-actions-select-page"></th>
+        
+        <th>ID</th>
+        <th>Прокси</th>
+        <th class="text-center">Тип</th>
+        <th class="text-center">Страна</th>
+        <th>Дата окончания</th>
+        <th data-field="tags">Теги</th>
+        <th data-field="access_ips">Разр. IP</th>
+        <th class="text-center">Проверить</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div class="text-center m-2 empty-result" style="display: none;">Пустой список</div>
+</div>
+
+
+<div class="text-center mb-3">
+  <button class="btn btn-primary js-load-more" data-type="proxy" data-url="/proxies/" data-form=".js-proxy-filter-form">Загрузить еще</button>
+</div>
+
+
+<div data-template="1" data-type="access_ips" data-url="/json/accessip/" class="shadow-lg select-specs" style="display: none;">
+  <div><select multiple></select></div>
+  <div class="select-specs-help">Максимум 3 разр. IP</div>
+  <div class="mt-2 d-flex">
+    <button class="btn btn-sm btn-danger js-select-specs-close"><i class="fa fa-times"></i></button>
+    <button class="btn btn-sm btn-success ml-auto js-select-specs-save"><i class="fa fa-check"></i></button>
+  </div>
+</div>
+
+<div data-template="1" data-type="tags" data-url="/json/tag/" class="shadow-lg select-specs" style="display: none;">
+  <div><select multiple></select></div>
+  <div class="select-specs-help">Максимум 5 тегов</div>
+  <div class="mt-2 d-flex">
+    <button class="btn btn-sm btn-danger js-select-specs-close"><i class="fa fa-times"></i></button>
+    <button class="btn btn-sm btn-success ml-auto js-select-specs-save"><i class="fa fa-check"></i></button>
+  </div>
+</div>
+
+  </div>
+
+
+                                <!-- [ Main Content ] end -->
+                                
+                            </div>
+                            <div id="footer-height" style="height: 0;">&nbsp;</div>
+                            
+<div class="footer-links mt-4">
+  <a class="text-muted mr-3" href="/static/panel/agreement.docx">пользовательское соглашение</a>
+  <a class="text-muted" href="/static/panel/policy.docx">политика конфиденциальности</a>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <!-- Required Js -->
+    <script src="/static/panel/assets/js/plugins/bootstrap.min.js"></script>
+    <script src="/static/panel/assets/js/pcoded.min.js?1697545152"></script>
+
+
+    <script src="/static/panel/assets/js/horizontal-menu.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script src="/static/panel/assets/js/plugins/clipboard.min.js"></script>
+    <!-- <script src="/static/panel/assets/js/plugins/bootstrap-notify.min.js"></script> -->
+    <!-- <script src="/static/panel/assets/js/plugins/bootstrap-slider.min.js"></script> -->
+    
+    <script src="/static/panel/js/bootstrap-notify.min.js"></script>
+    <script src="/static/panel/js/jquery.checkboxes-1.2.2.min.js"></script>
+    <script src="/static/panel/js/base.js?1697545152"></script>
+    <script src="/static/panel/js/notify.js?1697545152"></script>
+    <script src="/static/panel/js/coupon.js?1697545152"></script>
+    <script src="/static/panel/js/specs.js?1697545152"></script>
+    <script src="/static/panel/js/main.js?1697545152"></script>
+    <script src="/static/panel/js/partnercoupons.js?1697545152"></script>
+
+    
+
+    <script>
+  
+        $(function() {
+            $('#layout-sidenav').each(function() {
+                new SideNav(this, {
+                    orientation: $(this).hasClass('sidenav-horizontal') ? 'horizontal' : 'vertical'
+                });
+            });
+            $('body').on('click', '.layout-sidenav-toggle', function(e) {
+                e.preventDefault();
+                window.layoutHelpers.toggleCollapsed();
+                if (!window.layoutHelpers.isSmallScreen()) {
+                    try {
+                        localStorage.setItem('layoutCollapsed', String(window.layoutHelpers.isCollapsed()));
+                    } catch (e) {}
+                }
+            });
+        });
+        $(document).ready(function() {
+            $("#pcoded").pcodedmenu({
+                themelayout: 'horizontal',
+                MenuTrigger: 'hover',
+                SubMenuTrigger: 'hover',
+            });
+        });
+    </script>
+
+    
+
+    
+
+
+
+
+    
+        <script src="//code-eu1.jivosite.com/widget/LELND3kvCh" async></script>
+    
+</body>
+</html>
